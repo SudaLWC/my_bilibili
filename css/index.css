@@ -205,3 +205,40 @@ ul {
 .bottombtn .open-app .Navbar_logo {
   margin-right: 2.6667vw;
 }
+#app .el-drawer__wrapper {
+  top: 48px;
+}
+#app .el-drawer {
+  box-shadow: none;
+}
+#app .el-drawer .drawer-box {
+  position: relative;
+  padding: 2.66667vw 5.33333vw 5.33333vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  height: 100%;
+  font-size: 3.73333vw;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+#app .el-drawer .drawer-box .link-item {
+  margin: 2.13333vw;
+  white-space: nowrap;
+  color: #757575;
+}
+#app .el-drawer .drawer-box .general_pullup_s {
+  position: absolute;
+  bottom: 0.53333vw;
+  left: 50%;
+  color: #aaa;
+  font-size: 5.33333vw;
+  margin-left: -2.66667vw;
+}
+#app .v-modal {
+  top: 48px;
+  background-color: rgba(0, 0, 0, 0.6);
+}
