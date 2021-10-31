@@ -106,12 +106,17 @@ ul {
   font-size: 5.33333vw;
 }
 .channel {
+  overflow: hidden;
   width: 89.3333vw;
 }
 .channel ul {
   display: flex;
-  overflow: hidden;
+  overflow-x: scroll;
+  overflow-y: hidden;
   align-items: center;
+}
+.channel ul::-webkit-scrollbar {
+  display: none;
 }
 .channel ul a {
   display: inline-block;
