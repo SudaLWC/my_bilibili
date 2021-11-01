@@ -36,7 +36,7 @@
         <div class="channel-menu">
           <!-- 频道导航 -->
           <div class="channel">
-            <ul>
+            <ul id="scroll">
               <a href="#" style="color: #fb7299;position: relative;">
                 首页
                 <div class="highline"></div>
@@ -449,6 +449,43 @@
         return {
           drawer: false
         }
+      },
+      mounted() {
+        this.$notify({
+          message: '功能开发中...',
+          duration: 3000,
+          iconClass: 'el-icon-message-solid',
+          showClose: false,
+          onClick() {
+            this.$notify.closeAll()
+          }
+        })
+        let scroll = document.getElementById("scroll")
+        let startX = 0 // 刚触碰到屏幕的时的手指信息
+        let centerX = 0 // 用来记录每次触摸时上一次的偏移距离
+        // touchstart 时，记录手指在 X 轴距离左侧距离
+        scroll.addEventListener('touchstart', function (e) {
+          startX = e.changedTouches[0].clientX;
+        })
+        // touchmove 时，记录此时手指在 X 轴距离左侧距离
+        scroll.addEventListener('touchmove', function (e) {
+          // 获取差值
+          let d = e.changedTouches[0].clientX - startX;
+          // 上次的滑动距离加上本次的滑动距离
+          let tempX = centerX + d;
+          let MaxLeft = (scroll.offsetWidth - scroll.scrollWidth)
+          if (tempX > 0) tempX = 0
+          else if (tempX < MaxLeft) tempX = MaxLeft
+          // 设置 scroll 在 X 轴上的偏移
+          scroll.style.transform = 'translateX(' + tempX + 'px)';
+        })
+        // touchend 时，记录此时手指在 X 轴距离左侧距离
+        scroll.addEventListener('touchend', function (e) {
+          // 获取差值
+          let d = e.changedTouches[0].clientX - startX;
+          // 记录移动的距离
+          centerX = centerX + d;
+        })
       },
       methods: {
         closeDrawer() {

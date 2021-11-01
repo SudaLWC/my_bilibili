@@ -111,8 +111,6 @@ ul {
 }
 .channel ul {
   display: flex;
-  overflow-x: scroll;
-  overflow-y: hidden;
   align-items: center;
 }
 .channel ul::-webkit-scrollbar {
@@ -246,4 +244,30 @@ ul {
 #app .v-modal {
   top: 48px;
   background-color: rgba(0, 0, 0, 0.6);
+}
+.el-notification {
+  padding: 2px 0 2px 5px !important;
+  height: 24px;
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  color: #ccc;
+  top: 34px !important;
+  right: 0 !important;
+  width: unset !important;
+  border-radius: 12px 0 0 12px !important;
+  border-right: none !important;
+}
+.el-notification .el-notification__icon {
+  margin: auto 0;
+  height: 12px;
+  width: 12px;
+  font-size: 12px;
+}
+.el-notification .el-notification__group {
+  margin: 0;
+}
+.el-notification .el-notification__group .el-notification__content {
+  transform: scale(0.8);
+  font-size: 12px;
+  line-height: 18px;
+  margin: 0;
 }
