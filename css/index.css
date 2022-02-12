@@ -144,10 +144,7 @@ ul {
 }
 .m-home .vedio-list-box {
   padding: 0 1.3333vw;
-  height: 429.3333vw;
-}
-.vedio-box {
-  height: 429.3333vw;
+  height: calc(177.8667vw - 22.4vw);
 }
 .vedio-box a {
   float: left;
@@ -164,6 +161,9 @@ ul {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+}
+.swiper-slide {
+  height: 40.2667vw !important;
 }
 .box {
   position: relative;
