@@ -37,7 +37,7 @@
         <div class="channel-menu">
           <!-- 频道导航 -->
           <div class="channel">
-            <ul id="scroll">
+            <ul ref="scroll" @touchstart="scrollTouchstart" @touchmove="scrollTouchmove" @touchend="scrollTouchend">
               <a href="#" style="color: #fb7299;position: relative;">
                 <span>首页</span>
                 <div class="highline"></div>
@@ -466,10 +466,13 @@
       el: '#app',
       data() {
         return {
-          drawer: false
+          drawer: false,
+          startX: 0,
+          centerX: 0
         }
       },
       mounted() {
+        // 右侧小通知
         this.$notify({
           message: '功能开发中...',
           duration: 3000,
@@ -479,37 +482,36 @@
             this.$notify.closeAll()
           }
         })
-        let scroll = document.getElementById("scroll")
-        let startX = 0 // 刚触碰到屏幕的时的手指信息
-        let centerX = 0 // 用来记录每次触摸时上一次的偏移距离
-        let MaxLeft = (scroll.offsetWidth - scroll.scrollWidth) //向左偏移最大距离
+        // let startX = 0 // 刚触碰到屏幕的时的手指信息
+        // let centerX = 0 // 用来记录每次触摸时上一次的偏移距离
+        // let MaxLeft = (scroll.offsetWidth - scroll.scrollWidth) //向左偏移最大距离
         // touchstart 时，记录手指在 X 轴距离左侧距离
-        scroll.addEventListener('touchstart', function (e) {
-          startX = e.changedTouches[0].clientX;
-        })
+        // scroll.addEventListener('touchstart', function (e) {
+        //   startX = e.changedTouches[0].clientX;
+        // })
         // touchmove 时，记录此时手指在 X 轴距离左侧距离
-        scroll.addEventListener('touchmove', function (e) {
-          // 获取差值
-          let d = e.changedTouches[0].clientX - startX;
-          // 上次的滑动距离加上本次的滑动距离
-          let tempX = centerX + d;
-          // let MaxLeft = (scroll.offsetWidth - scroll.scrollWidth)
-          // 设置滑动区间
-          if (tempX > 0) tempX = 0
-          else if (tempX < MaxLeft) tempX = MaxLeft
-          // 设置 scroll 在 X 轴上的偏移
-          scroll.style.transform = 'translateX(' + tempX + 'px)';
-        })
+        // scroll.addEventListener('touchmove', function (e) {
+        // 获取差值
+        // let d = e.changedTouches[0].clientX - startX;
+        // 上次的滑动距离加上本次的滑动距离
+        // let tempX = centerX + d;
+        // let MaxLeft = (scroll.offsetWidth - scroll.scrollWidth)
+        // 设置滑动区间
+        // if (tempX > 0) tempX = 0
+        // else if (tempX < MaxLeft) tempX = MaxLeft
+        // 设置 scroll 在 X 轴上的偏移
+        // scroll.style.transform = 'translateX(' + tempX + 'px)';
+        // })
         // touchend 时，记录此时手指在 X 轴距离左侧距离
-        scroll.addEventListener('touchend', function (e) {
-          // 获取差值
-          let d = e.changedTouches[0].clientX - startX;
-          // 记录移动的距离
-          centerX = centerX + d;
-          // 到达导航两侧不再增加移动距离
-          if (centerX > 0) centerX = 0
-          else if (centerX < MaxLeft) centerX = MaxLeft
-        })
+        // scroll.addEventListener('touchend', function (e) {
+        // 获取差值
+        // let d = e.changedTouches[0].clientX - startX;
+        // 记录移动的距离
+        // centerX = centerX + d;
+        // 到达导航两侧不再增加移动距离
+        //   if (centerX > 0) centerX = 0
+        //   else if (centerX < MaxLeft) centerX = MaxLeft
+        // })
         var swiper = new Swiper('.swiper-container', {
           slidesPerView: 'auto',
           freeMode: true,
@@ -519,6 +521,27 @@
       methods: {
         closeDrawer() {
           this.$refs.draw.closeDrawer()
+        },
+        scrollTouchstart(e) {
+          this.startX = e.changedTouches[0].clientX
+        },
+        scrollTouchmove(e) {
+          let d = e.changedTouches[0].clientX - this.startX
+          let tempX = this.centerX + d
+          if (tempX > 0) tempX = 0
+          else if (tempX < this.MaxLeft) tempX = this.MaxLeft
+          this.$refs.scroll.style.transform = 'translateX(' + tempX + 'px)'
+        },
+        scrollTouchend(e) {
+          let d = e.changedTouches[0].clientX - this.startX
+          this.centerX += d
+          if (this.centerX > 0) this.centerX = 0
+          else if (this.centerX < this.MaxLeft) this.centerX = this.MaxLeft
+        }
+      },
+      computed: {
+        MaxLeft() {
+          return this.$refs.scroll.offsetWidth - this.$refs.scroll.scrollWidth
         }
       }
     })
